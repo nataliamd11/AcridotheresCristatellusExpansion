@@ -26,6 +26,8 @@ class ACRecord(models.Model):
     observation_date = models.DateField(null=False)
     year = models.IntegerField(default=get_year)
 
+    class Meta:
+        ordering = ['country', 'year']
 
     def __str__(self):
         return f'{self.country_code} _ {self.year}'

@@ -1,3 +1,6 @@
 from django.contrib import admin
+from ACExpansion.models import ACRecord
 
-# Register your models here.
+
+admin.site.register(ACRecord)
+
