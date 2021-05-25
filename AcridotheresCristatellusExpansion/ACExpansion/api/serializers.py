@@ -6,4 +6,4 @@ class ACRecordSerializer(serializers.ModelSerializer):
 
     class Meta():
         model = ACRecord
-        fields = '__all__'
+        exclude = ('state_code', 'state')
