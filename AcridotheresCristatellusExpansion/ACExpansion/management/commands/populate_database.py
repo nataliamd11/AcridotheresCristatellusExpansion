@@ -1,4 +1,5 @@
 import os
+
 from ACExpansion.models import ACRecord as Record
 from ACExpansion.utils.utils_populate_database import RecordsFromCsv
 from django.core.management.base import BaseCommand, CommandError
