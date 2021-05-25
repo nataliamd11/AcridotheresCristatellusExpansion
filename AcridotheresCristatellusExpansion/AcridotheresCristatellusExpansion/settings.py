@@ -132,3 +132,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# uncomment to change the number of maximum fields so database can be emptied easily
+# DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000
