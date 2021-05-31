@@ -7,8 +7,14 @@
     </select>
     <span>{{ selectedCountry }}</span>
   </div>
+  <div v-for="(year, index) in ACYears" :key="index">
+    {{ year }}
+  </div>
   <div v-for="record in ACRecords" :key="record.id">
     {{ record }}
+  </div>
+  <div class='mt-3'>
+    <button @click="test">Play</button>
   </div>
 </template>
 
@@ -20,7 +26,7 @@ export default {
   data: function() {
       return {
           selectedCountry: 'Argentina',
-          year: 1991,
+          year: 1988,
       }
   },
   watch: {
@@ -29,17 +35,15 @@ export default {
         this.getAPIRecords({country: this.selectedCountry});
     }
   },
-  async mounted() {
-        await this.getAPIRecords({country: this.selectedCountry});
-    },
+  // async mounted() {
+  //       await this.getAPIRecords({country: this.selectedCountry});
+  //   },
   computed:{
       ACRecords() {
-        console.log('in computed', this.year);
-        console.log('in computed', this.$store.getters.getRecordsByYear(this.year));
         return this.$store.getters.getRecordsByYear(this.year)
       },
-      Countries() {
-        return this.$store.getters.Countries
+      ACYears() {
+        return this.$store.getters.getYears
       },
     },
   methods: {
@@ -48,6 +52,9 @@ export default {
         ]),
         showCountry(country_in) {
             console.log(country_in)
+        },
+        test() {
+          console.log('clicked');
         }
     },
 };
