@@ -4,11 +4,11 @@ import axios from "axios";
 export default createStore({
   state: {
     records: [],
-    countries: ['Argentina', 'Canada', 'Mexico'],
   },
   getters: {
-    ACRecords:state => {
-      return state.records
+    getRecordsByYear: (state) => (year) => {
+      console.log('In getter', state.records);
+      return state.records.filter(records_year => records_year.year === year)
     },
     Countries:state => {
       return state.countries
@@ -25,7 +25,7 @@ export default createStore({
     getAPIRecords(context, siteParams) {
       console.log('siteParams', siteParams);
       console.log(siteParams.country);
-      let endpoint = ['api', 'records', siteParams.country, siteParams.year, ''].join('/');
+      let endpoint = ['api', 'records', siteParams.country, ''].join('/');
       console.log(endpoint);
       // let endpoint = "/api/records/Argentina/1988/"
       axios({

@@ -13,31 +13,34 @@
 </template>
 
 <script>
-import { mapGetters,  mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: "Home",
   data: function() {
       return {
           selectedCountry: 'Argentina',
-          question: '',
-          answer: 'Questions usually contain a question mark. ;-)'
+          year: 1991,
       }
   },
   watch: {
     selectedCountry() {
         this.showCountry(this.selectedCountry);
-        this.getAPIRecords({country: this.selectedCountry, year:'0'});
+        this.getAPIRecords({country: this.selectedCountry});
     }
   },
   async mounted() {
-        await this.getAPIRecords({country: this.selectedCountry, year:'0'});
+        await this.getAPIRecords({country: this.selectedCountry});
     },
   computed:{
-        ...mapGetters([
-        'ACRecords',
-        'Countries',  
-        ]),
+      ACRecords() {
+        console.log('in computed', this.year);
+        console.log('in computed', this.$store.getters.getRecordsByYear(this.year));
+        return this.$store.getters.getRecordsByYear(this.year)
+      },
+      Countries() {
+        return this.$store.getters.Countries
+      },
     },
   methods: {
         ...mapActions([
