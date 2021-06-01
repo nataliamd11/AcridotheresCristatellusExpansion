@@ -14,6 +14,7 @@
     <button v-if="playMap" @click="playAnimatedMap">Play</button>
     <button v-else @click="stopAnimatedMap">Stop</button>
   </div>
+  <Map></Map>
   <div v-for="record in ACRecords" :key="record.id">
     {{ record }}
   </div>
@@ -22,6 +23,7 @@
 <script>
 import { mapActions } from "vuex";
 import { maxMinYears, sleep } from "/utils/utils.js";
+import Map from "@/components/Map";
 
 export default {
   name: "Home",
@@ -31,6 +33,9 @@ export default {
       year: null,
       playMap: true,
     };
+  },
+  components: {
+    Map,
   },
   watch: {
     selectedCountry() {
