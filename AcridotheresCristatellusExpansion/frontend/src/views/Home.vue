@@ -21,7 +21,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import  { maxMinYears, sleep } from "/common/utils.js";
+import { maxMinYears, sleep } from "/utils/utils.js";
 
 export default {
   name: "Home",
@@ -57,14 +57,14 @@ export default {
       this.playMap = false;
       let counter = minYear;
       while (counter <= maxYear && this.playMap === false) {
-       this.year = counter;
-       await sleep(500);
-       counter++;
+        this.year = counter;
+        await sleep(500);
+        counter++;
       }
     },
     stopAnimatedMap() {
       this.playMap = true;
-    }
+    },
   },
 };
 </script>
