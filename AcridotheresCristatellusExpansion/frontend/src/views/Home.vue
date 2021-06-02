@@ -6,6 +6,7 @@
       <option>Uruguay</option>
     </select>
     <span>{{ selectedCountry }}</span>
+    <span>{{ this.year }}</span>
   </div>
   <!-- <div v-for="(year, index) in ACYears" :key="index">
     {{ year }}
@@ -14,10 +15,10 @@
     <button v-if="playMap" @click="playAnimatedMap">Play</button>
     <button v-else @click="stopAnimatedMap">Stop</button>
   </div>
-  <Map :latLonRecords="latLonRecords"></Map>
-  <div v-for="record in ACRecords" :key="record.id">
+  <Map :latLonRecords="ACRecords"></Map>
+  <!-- <div v-for="(record, index) in ACRecords" :key="index">
     {{ record }}
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -53,7 +54,8 @@ export default {
   },
   computed: {
     ACRecords() {
-      return this.$store.getters.getRecordsByYear(this.year);
+      console.log('en home computed getter', this.$store.getters.getRecordsByYear(this.year));
+      return this.$store.getters.getRecordsByYear(this.year)
     },
     ACYears() {
       return this.$store.getters.getYears;
@@ -70,6 +72,7 @@ export default {
         await sleep(500);
         counter++;
       }
+      this.playMap = true;
     },
     stopAnimatedMap() {
       this.playMap = true;

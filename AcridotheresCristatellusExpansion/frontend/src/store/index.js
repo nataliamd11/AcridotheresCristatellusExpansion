@@ -8,7 +8,13 @@ export default createStore({
   },
   getters: {
     getRecordsByYear: (state) => (year) => {
-      return state.records.filter((records_year) => records_year.year === year);
+      let recordsYear = state.records.filter((records_year) => records_year.year === year);
+      let latLonYears = [];
+      for (var i=0; i<recordsYear.length; i++) {
+        latLonYears[i] = {'lat': recordsYear[i].latitude, 
+                          'lon': recordsYear[i].longitude}
+      }
+      return latLonYears
     },
     Countries: (state) => {
       return state.countries;

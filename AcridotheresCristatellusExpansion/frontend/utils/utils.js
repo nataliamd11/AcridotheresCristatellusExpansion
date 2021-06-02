@@ -10,7 +10,7 @@ export function maxMinYears(ACYears) {
     return [ACYears[0], ACYears[ACYears.length -1]]
 }
 
-export function createMap(el_id, center, zoom=13) {
+export function createMap(el_id, center, zoom=6) {
   const map = L.map(el_id).setView(center, zoom);
   return map
 }
@@ -28,8 +28,8 @@ function createMarker(location, el_map) {
   L.circleMarker(location, {
       color: 'red',
       fillColor: '#f03',
-      fillOpacity: 0.5,
-      radius: 8
+      fillOpacity: 0.4,
+      radius: 6
     }).addTo(el_map);
   }
 

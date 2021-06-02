@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h1>Showing component</h1>
+    <!-- <div v-for="(record, index) in latLonRecords" :key="index">
+      {{ record }}
+    </div> -->
     <div id="mapContainer"></div>
   </div>
 </template>
@@ -12,7 +14,8 @@ export default {
   name: "Map",
   data() {
     return {
-      center: { lat: 51.505, lon: -0.09 },
+      center: { lat: -34.856227, lon: -58.290644 },
+      map: null
     };
   },
   props: {
@@ -21,14 +24,22 @@ export default {
       required: true
     }
   },
+  watch: {
+    latLonRecords() {
+      this.addMarkers();
+    }
+  },
   methods: {
     setupLeafletMap: function () {
       var map = createMap("mapContainer", this.center);
       addTile(map);
-      console.log(this.latLonRecords);
-      addRecordsMarkers(this.latLonRecords, map);
+      console.log('en map methods', this.latLonRecords);
+      this.map = map;
       console.log('sale');
     },
+    addMarkers() {
+      addRecordsMarkers(this.latLonRecords, this.map);
+    }
   },
   mounted() {
     this.setupLeafletMap();
