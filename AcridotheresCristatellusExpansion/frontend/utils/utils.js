@@ -22,7 +22,9 @@ export function addTile(el_map) {
     }).addTo(el_map);
 }
 
-export function createMarker(location, el_map) {
+
+function createMarker(location, el_map) {
+  console.log('tambien entra');
   L.circleMarker(location, {
       color: 'red',
       fillColor: '#f03',
@@ -30,3 +32,11 @@ export function createMarker(location, el_map) {
       radius: 8
     }).addTo(el_map);
   }
+
+export function addRecordsMarkers(latLonRecords, el_map) {
+  console.log('entra');
+  for (var i=0; i<latLonRecords.length; i++) {
+    console.log(latLonRecords[i]);
+    createMarker(latLonRecords[i], el_map);
+  }
+}

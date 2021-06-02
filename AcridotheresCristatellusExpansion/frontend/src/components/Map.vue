@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { createMap, addTile, createMarker } from "/utils/utils.js";
+import { createMap, addTile, addRecordsMarkers } from "/utils/utils.js";
 
 export default {
   name: "Map",
@@ -15,11 +15,19 @@ export default {
       center: { lat: 51.505, lon: -0.09 },
     };
   },
+  props: {
+    latLonRecords: {
+      type: Array,
+      required: true
+    }
+  },
   methods: {
     setupLeafletMap: function () {
       var map = createMap("mapContainer", this.center);
       addTile(map);
-      createMarker(this.center, map);
+      console.log(this.latLonRecords);
+      addRecordsMarkers(this.latLonRecords, map);
+      console.log('sale');
     },
   },
   mounted() {

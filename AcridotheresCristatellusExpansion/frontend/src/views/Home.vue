@@ -14,7 +14,7 @@
     <button v-if="playMap" @click="playAnimatedMap">Play</button>
     <button v-else @click="stopAnimatedMap">Stop</button>
   </div>
-  <Map></Map>
+  <Map :latLonRecords="latLonRecords"></Map>
   <div v-for="record in ACRecords" :key="record.id">
     {{ record }}
   </div>
@@ -32,6 +32,10 @@ export default {
       selectedCountry: "Argentina",
       year: null,
       playMap: true,
+      latLonRecords: [
+        { lat: 51.505, lon: -0.09 },
+        { lat: 51.506, lon: -0.10 }
+      ]
     };
   },
   components: {
