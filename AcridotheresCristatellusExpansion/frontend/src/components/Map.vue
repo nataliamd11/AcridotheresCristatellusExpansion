@@ -8,14 +8,15 @@
 </template>
 
 <script>
-import { createMap, addTile, addRecordsMarkers } from "/utils/utils.js";
+import { createMap, addTile, addRecordsMarkers, createMarkerGroup} from "/utils/utils.js";
 
 export default {
   name: "Map",
   data() {
     return {
       center: { lat: -34.856227, lon: -58.290644 },
-      map: null
+      map: null,
+      marker_group: null,
     };
   },
   props: {
@@ -32,13 +33,15 @@ export default {
   methods: {
     setupLeafletMap: function () {
       var map = createMap("mapContainer", this.center);
+      var marker_group = createMarkerGroup(map);
       addTile(map);
       console.log('en map methods', this.latLonRecords);
       this.map = map;
+      this.marker_group = marker_group;
       console.log('sale');
     },
     addMarkers() {
-      addRecordsMarkers(this.latLonRecords, this.map);
+      addRecordsMarkers(this.latLonRecords, this.map, this.marker_group);
     }
   },
   mounted() {
