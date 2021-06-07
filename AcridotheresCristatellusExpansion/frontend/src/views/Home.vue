@@ -1,56 +1,48 @@
 <template>
   <div class="container">
-    <select v-model="selectedCountry">
-      <option>Argentina</option>
-      <option>Canada</option>
-      <option>Uruguay</option>
-    </select>
+    <Dropdown></Dropdown>
+    <PlayMap></PlayMap>
     <span>{{ selectedCountry }}</span>
     <span>{{ this.year }}</span>
   </div>
-  <!-- <div v-for="(year, index) in ACYears" :key="index">
-    {{ year }}
-  </div> -->
   <div class="mt-3">
     <button v-if="playMap" @click="playAnimatedMap">Play</button>
     <button v-else @click="stopAnimatedMap">Stop</button>
   </div>
   <Map :latLonRecords="ACRecords"></Map>
-  <!-- <div v-for="(record, index) in ACRecords" :key="index">
-    {{ record }}
-  </div> -->
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import { maxMinYears, sleep } from "/utils/utils.js";
 import Map from "@/components/Map";
+import Dropdown from "@/components/Dropdown";
+import PlayMap from "@/components/PlayMap";
 
 export default {
   name: "Home",
   data: function () {
     return {
-      selectedCountry: "Argentina",
       year: null,
       playMap: true,
-      latLonRecords: [
-        { lat: 51.505, lon: -0.09 },
-        { lat: 51.506, lon: -0.10 }
-      ]
     };
   },
   components: {
     Map,
+    Dropdown,
+    PlayMap
   },
   watch: {
     selectedCountry() {
+      console.log('en watch home', this.selectedCountry);
       this.year = null;
       this.playMap = true;
       this.getAPIRecords({ country: this.selectedCountry });
     },
   },
   async mounted() {
-    await this.getAPIRecords({ country: this.selectedCountry });
+    // starts by showing Argentinian records
+    await this.getAPIRecords({ country: 'Argentina' });
   },
   computed: {
     ACRecords() {
@@ -59,6 +51,9 @@ export default {
     },
     ACYears() {
       return this.$store.getters.getYears;
+    },
+    selectedCountry() {
+      return this.$store.getters.selectedCountry;
     },
   },
   methods: {
