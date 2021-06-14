@@ -19,7 +19,7 @@ export default {
     methods: {
         setCountry () {
             console.log('in dropdown', this.selectedCountry);
-            this.$store.commit('saveSelectedCountry', 
+            this.$store.commit('ApiData/saveSelectedCountry', 
                                {'selected_country': this.selectedCountry})
         }
     }    

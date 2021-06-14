@@ -11,12 +11,12 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     name: "PlayMap",
     computed: {
-        ...mapGetters([
+        ...mapGetters('ApiData/', [
             'getPlayMap'
         ])
     },
     methods: {
-        ...mapActions([
+        ...mapActions('ApiData/', [
             'playAnimatedMap',
             'stopAnimatedMap'
         ])

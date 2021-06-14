@@ -19,16 +19,20 @@ const getters = {
                             'lon': recordsYear[i].longitude}
         }
         return latLonYears
-      },
-      selectedCountry: (state) => {
-        return state.selected_country;
-      },
-      getYears: (state) => {
-        return state.years;
-      },
-      getPlayMap: (state) => {
-        return state.play_map;
-      }
+    },
+    selectedCountry: (state) => {
+      return state.selected_country;
+    },
+    getYears: (state) => {
+      return state.years;
+    },
+    getPlayMap: (state) => {
+      return state.play_map;
+    },
+    getCurrentYear: (state) => {
+      console.log('getter: ', state.current_year);
+      return state.current_year
+    },
   }
 
   const mutations = {
@@ -45,12 +49,14 @@ const getters = {
       state.play_map = payload.play_map;
     },
     saveCurrentYear(state, payload) {
+      console.log('mutation', state.current_year);
       state.current_year = payload.current_year;
     }
   }
 
   const actions = {
     getAPIRecords(context, siteParams) {
+        console.log('running when select country');
         let endpoint = ["api", "records", siteParams.country, ""].join("/");
         axios
           .all([axios.get(endpoint), axios.get(endpoint + "years/")])
@@ -65,15 +71,30 @@ const getters = {
       async playAnimatedMap(context) {
         console.log('is called from actions');
         let [minYear, maxYear] = maxMinYears(context.getters.getYears);
+        
+        console.log('max year', maxYear);
+        
         context.commit("savePlayMap", { play_map: false });
-        let counter = minYear;
+
+        let counter;
+        if (!context.state.current_year) {
+          counter = minYear;
+        } else {
+          counter = context.state.current_year;
+        }
+        
         while (counter <= maxYear && context.state.play_map === false) {
-          context.commit("saveCurrentYear", { 'current_year': counter });
+          context.commit("saveCurrentYear", { current_year: counter });
           await sleep(500);
-          console.log(counter);
+          console.log('year counter: ', counter);
           counter++;
         }
         context.commit("savePlayMap", { play_map: true });
+
+        if (context.state.current_year === maxYear) {
+          console.log('es igual');
+          context.commit("saveCurrentYear", { current_year: null });
+        }
       },
       stopAnimatedMap(contex) {
         console.log('is called from actions');
