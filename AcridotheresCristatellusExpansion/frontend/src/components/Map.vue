@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { createMap, addTile, addRecordsMarkers, createMarkerGroup} from "/utils/utils.js";
+import { createMap, addTile, addRecordsMarkers, createMarkerGroup} from "/utils/utilsMap.js";
 
 export default {
   name: "Map",
