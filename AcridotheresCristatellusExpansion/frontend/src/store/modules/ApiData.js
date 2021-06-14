@@ -1,5 +1,7 @@
 import axios from "axios";
-import { maxMinYears, sleep } from "/utils/utilsApiData.js";
+import { maxMinYears, 
+         sleep, 
+         startCounter } from "/utils/utilsApiData.js";
 
 
 const state = () => ({
@@ -69,35 +71,23 @@ const getters = {
       }
     },
     async playAnimatedMap(context) {
-      console.log('is called from actions');
       let [minYear, maxYear] = maxMinYears(context.getters.getYears);
-      
-      console.log('max year', maxYear);
-      
       context.commit("savePlayMap", { play_map: false });
 
-      let counter;
-      if (!context.state.current_year) {
-        counter = minYear;
-      } else {
-        counter = context.state.current_year;
-      }
+      let counter = startCounter(context.state.current_year, minYear);
       
       while (counter <= maxYear && context.state.play_map === false) {
         context.commit("saveCurrentYear", { current_year: counter });
         await sleep(500);
-        console.log('year counter: ', counter);
         counter++;
       }
+      
       context.commit("savePlayMap", { play_map: true });
-
       if (context.state.current_year === maxYear) {
-        console.log('es igual');
         context.commit("saveCurrentYear", { current_year: null });
       }
     },
     stopAnimatedMap(contex) {
-      console.log('is called from actions');
       contex.commit("savePlayMap", { play_map: true });
     }
   }
