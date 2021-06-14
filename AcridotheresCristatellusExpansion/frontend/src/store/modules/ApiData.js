@@ -13,8 +13,8 @@ const state = () => ({
   })
   
 const getters = {
-    getRecordsByYear: (state) => (year) => {
-        let recordsYear = state.records.filter((records_year) => records_year.year === year);
+    getRecordsByYear: (state) => {
+        let recordsYear = state.records.filter((records_year) => records_year.year === state.current_year);
         let latLonYears = [];
         for (var i=0; i<recordsYear.length; i++) {
           latLonYears[i] = {'lat': recordsYear[i].latitude, 
@@ -22,7 +22,7 @@ const getters = {
         }
         return latLonYears
     },
-    selectedCountry: (state) => {
+    getSelectedCountry: (state) => {
       return state.selected_country;
     },
     getYears: (state) => {
@@ -32,7 +32,6 @@ const getters = {
       return state.play_map;
     },
     getCurrentYear: (state) => {
-      console.log('getter: ', state.current_year);
       return state.current_year
     },
   }
@@ -51,14 +50,15 @@ const getters = {
       state.play_map = payload.play_map;
     },
     saveCurrentYear(state, payload) {
-      console.log('mutation', state.current_year);
       state.current_year = payload.current_year;
     }
   }
 
   const actions = {
-    async getAPIRecords(context, siteParams) {
-      let endpoint = ["api", "records", siteParams.country, ""].join("/");
+
+    async getAPIRecords(context) {
+      // Gets data from django api and saves it in state.
+      let endpoint = ["api", "records", context.state.selected_country, ""].join("/");
       try {
         let [records, years] = await axios.all(
           [axios.get(endpoint), axios.get(endpoint + "years/")])
@@ -70,24 +70,29 @@ const getters = {
         }
       }
     },
+
     async playAnimatedMap(context) {
+      // Starts the animation by setting state.current_year and state.play map.
+      // Runs animation by incrementing state.current_year by 1 every 500ms.
+      
       let [minYear, maxYear] = maxMinYears(context.getters.getYears);
       context.commit("savePlayMap", { play_map: false });
 
+      if (context.state.current_year === maxYear) {
+        await context.commit("saveCurrentYear", { current_year: null });
+      } 
       let counter = startCounter(context.state.current_year, minYear);
-      
+    
       while (counter <= maxYear && context.state.play_map === false) {
         context.commit("saveCurrentYear", { current_year: counter });
         await sleep(500);
         counter++;
       }
-      
       context.commit("savePlayMap", { play_map: true });
-      if (context.state.current_year === maxYear) {
-        context.commit("saveCurrentYear", { current_year: null });
-      }
     },
+
     stopAnimatedMap(contex) {
+      // Stops the animation by changing state.play_map to true. 
       contex.commit("savePlayMap", { play_map: true });
     }
   }

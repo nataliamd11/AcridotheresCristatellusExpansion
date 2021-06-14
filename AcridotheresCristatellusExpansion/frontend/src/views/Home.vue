@@ -2,8 +2,7 @@
   <div class="container">
     <Dropdown></Dropdown>
     <PlayMap></PlayMap>
-    <span>{{ selectedCountry }}</span>
-    <span>{{ this.year }}</span>
+    <!-- <span>{{ selectedCountry }}</span> -->
   </div>
   <Map :latLonRecords="ACRecords"></Map>
 </template>
@@ -17,11 +16,6 @@ import PlayMap from "@/components/PlayMap";
 
 export default {
   name: "Home",
-  data: function () {
-    return {
-      year: null,
-    };
-  },
   components: {
     Map,
     Dropdown,
@@ -30,27 +24,21 @@ export default {
   watch: {
     selectedCountry() {
       console.log('en watch home', this.selectedCountry);
-      this.year = this.getCurrentYear;
-      this.getAPIRecords({ country: this.selectedCountry });
+      this.getAPIRecords();
     },
-    getCurrentYear() {
-      console.log('en watch home', this.getCurrentYear);
-      this.year = this.getCurrentYear;
-    }
   },
   async mounted() {
     // starts by showing Argentinian records
-    await this.getAPIRecords({ country: 'Argentina' });
+    await this.getAPIRecords();
   },
   computed: {
-    ...mapGetters('ApiData', [
-      'getRecordsByYear',
-      'selectedCountry',
-      'getCurrentYear',
-    ]),
-      ACRecords() {
-        return this.getRecordsByYear(this.year)
-      }
+    ...mapGetters('ApiData', {
+      ACRecords: 'getRecordsByYear',
+      selectedCountry: 'getSelectedCountry',
+    }),
+    // ACRecords() {
+    //   return this.getRecordsByYear
+    // }
   },
   methods: {
     ...mapActions('ApiData/', [

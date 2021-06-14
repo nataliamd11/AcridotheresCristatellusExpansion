@@ -6,7 +6,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// This component manages the play function, by calling
+// play and stop actions.
+
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: "PlayMap",

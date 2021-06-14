@@ -9,6 +9,8 @@
 </template>
 
 <script>
+// this component sets the country
+
 export default {
     name: "Dropdown",
     data: function() {
@@ -22,7 +24,11 @@ export default {
             this.$store.commit('ApiData/saveSelectedCountry', 
                                {'selected_country': this.selectedCountry})
         }
-    }    
+    },
+    async mounted() {
+        // starts by showing Argentinian records
+        await this.setCountry();
+    },    
 }
 </script>
 
