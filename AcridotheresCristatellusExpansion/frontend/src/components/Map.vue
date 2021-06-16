@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <!-- <div v-for="(record, index) in latLonRecords" :key="index">
-      {{ record }}
-    </div> -->
     <div id="mapContainer"></div>
   </div>
 </template>
