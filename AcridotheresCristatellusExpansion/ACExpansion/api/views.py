@@ -27,3 +27,18 @@ class ListYears(View):
                               .distinct())
         return HttpResponse(json.dumps(list(AC_country)),
                             content_type="application/json")
+
+
+class ListCountries(View):
+
+    def list_countries(self):
+        countries = (ACRecord.objects.all()
+                        .order_by('country')
+                        .values_list('country', flat=True)
+                        .distinct())
+        return list(countries)
+
+    def get(self, request):
+        countries = self.list_countries()
+        return HttpResponse(json.dumps(countries),
+                            content_type="application/json")
