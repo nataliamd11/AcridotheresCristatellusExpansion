@@ -2,10 +2,8 @@ import math
 import pandas as pd
 import os
 
-directory = os.getcwd()
 
-
-class BaseGeographicalCalculations():
+class BaseGeoCalculations():
 
     @staticmethod
     def __getLength(lon_max, lon_min):
@@ -18,13 +16,14 @@ class BaseGeographicalCalculations():
     @staticmethod
     # Returns a tuple with the side length and width in grades.
     def __getLengthWidth(lon_max, lon_min, lat_max, lat_min):
-        side_length = __getLength(lon_max, lon_min)
-        side_width = __getWidth(lat_max, lat_min)
+        side_length = BaseGeoCalculations.__getLength(lon_max, lon_min)
+        side_width = BaseGeoCalculations.__getWidth(lat_max, lat_min)
         return (side_length, side_width)
 
     @staticmethod
     def getCenter(lon_max, lon_min, lat_max, lat_min):
-        side_length, side_width = __getLengthWidth(lon_max, lon_min, lat_max, lat_min)
+        side_length, side_width = BaseGeoCalculations.__getLengthWidth(
+            lon_max, lon_min, lat_max, lat_min)
         lon_center = side_length/2 + lon_min
         lat_center = side_length/2 + lat_min
         return [lon_center, lat_center]
@@ -32,7 +31,8 @@ class BaseGeographicalCalculations():
     @staticmethod
     def addBuffer(lon_max, lon_min, lat_max, lat_min):
         # Calculates new vertices for the map adding a buffer of 1/5 of the length
-        side_length, side_width = __getLengthWidth(lon_max, lon_min, lat_max, lat_min)
+        side_length, side_width = BaseGeoCalculations.__getLengthWidth(
+            lon_max, lon_min, lat_max, lat_min)
         old_vertices = [lon_max, lon_min, lat_max, lat_min]
         buffer_x = side_length/5
         buffer_y = side_width/5
@@ -46,18 +46,19 @@ class BaseGeographicalCalculations():
 
 
 
-class MapParameters(BaseGeographicalCalculations):
+class MapParameters(BaseGeoCalculations):
 
+    directory = os.getcwd()
     path_csv = os.path.join(directory, "ACExpansion", "utils", "AC_american_records_csv.csv")
     data = pd.read_csv(path_csv)
 
     def __init__(self, country):
-        super.__init__()
+        super().__init__()
         self.country = country
         self.data_country = self.filter_data_by_country()
 
     def filter_data_by_country(self):
-        data_country = data[data.country==self.country]
+        data_country = MapParameters.data[MapParameters.data.country==self.country]
         return data_country
 
     def getVertices(self):
