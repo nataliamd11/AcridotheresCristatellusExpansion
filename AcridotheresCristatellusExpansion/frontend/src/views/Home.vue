@@ -1,82 +1,49 @@
 <template>
   <div class="container">
-    <select v-model="selectedCountry">
-      <option>Argentina</option>
-      <option>Canada</option>
-      <option>Uruguay</option>
-    </select>
-    <span>{{ selectedCountry }}</span>
-    <span>{{ this.year }}</span>
-  </div>
-  <!-- <div v-for="(year, index) in ACYears" :key="index">
-    {{ year }}
-  </div> -->
-  <div class="mt-3">
-    <button v-if="playMap" @click="playAnimatedMap">Play</button>
-    <button v-else @click="stopAnimatedMap">Stop</button>
+    <Dropdown></Dropdown>
+    <PlayMap></PlayMap>
+    <!-- <span>{{ selectedCountry }}</span> -->
   </div>
   <Map :latLonRecords="ACRecords"></Map>
-  <!-- <div v-for="(record, index) in ACRecords" :key="index">
-    {{ record }}
-  </div> -->
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { maxMinYears, sleep } from "/utils/utils.js";
+import { mapActions, mapGetters } from "vuex";
+// import { maxMinYears, sleep } from "/utils/utils.js";
 import Map from "@/components/Map";
+import Dropdown from "@/components/Dropdown";
+import PlayMap from "@/components/PlayMap";
 
 export default {
   name: "Home",
-  data: function () {
-    return {
-      selectedCountry: "Argentina",
-      year: null,
-      playMap: true,
-      latLonRecords: [
-        { lat: 51.505, lon: -0.09 },
-        { lat: 51.506, lon: -0.10 }
-      ]
-    };
-  },
   components: {
     Map,
+    Dropdown,
+    PlayMap,
   },
   watch: {
     selectedCountry() {
-      this.year = null;
-      this.playMap = true;
-      this.getAPIRecords({ country: this.selectedCountry });
+      console.log('en watch home', this.selectedCountry);
+      this.getAPIRecords();
     },
   },
   async mounted() {
-    await this.getAPIRecords({ country: this.selectedCountry });
+    // starts by showing Argentinian records
+    await this.getAPIRecords();
   },
   computed: {
-    ACRecords() {
-      console.log('en home computed getter', this.$store.getters.getRecordsByYear(this.year));
-      return this.$store.getters.getRecordsByYear(this.year)
-    },
-    ACYears() {
-      return this.$store.getters.getYears;
-    },
+    ...mapGetters('ApiData', {
+      ACRecords: 'getRecordsByYear',
+      selectedCountry: 'getSelectedCountry',
+    }),
+    // ACRecords() {
+    //   return this.getRecordsByYear
+    // }
   },
   methods: {
-    ...mapActions(["getAPIRecords"]),
-    async playAnimatedMap() {
-      let [minYear, maxYear] = maxMinYears(this.ACYears);
-      this.playMap = false;
-      let counter = minYear;
-      while (counter <= maxYear && this.playMap === false) {
-        this.year = counter;
-        await sleep(500);
-        counter++;
-      }
-      this.playMap = true;
-    },
-    stopAnimatedMap() {
-      this.playMap = true;
-    },
+    ...mapActions('ApiData/', [
+      "getAPIRecords",
+    ]),
   },
 };
 </script>

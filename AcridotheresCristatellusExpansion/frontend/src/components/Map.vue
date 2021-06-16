@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <!-- <div v-for="(record, index) in latLonRecords" :key="index">
-      {{ record }}
-    </div> -->
     <div id="mapContainer"></div>
   </div>
 </template>
 
 <script>
-import { createMap, addTile, addRecordsMarkers, createMarkerGroup} from "/utils/utils.js";
+import { createMap, 
+         addTile, 
+         addRecordsMarkers, 
+         createMarkerGroup,
+         removeMarkers } from "/utils/utilsMap.js";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "Map",
@@ -28,7 +30,25 @@ export default {
   watch: {
     latLonRecords() {
       this.addMarkers();
+    },
+    getCurrentYear() {
+      if (!this.getCurrentYear) {
+        removeMarkers(this.marker_group);
+      }
+    },
+    async getSelectedCountry() {
+      removeMarkers(this.marker_group);
+      await this.$store.commit('ApiData/saveCurrentYear', 
+                              {'current_year': null}),
+      await this.$store.commit('ApiData/savePlayMap',
+                              {'play_map': true})
     }
+  },  
+  computed: {
+    ...mapGetters('ApiData', [
+      'getCurrentYear',
+      'getSelectedCountry',
+    ])
   },
   methods: {
     setupLeafletMap: function () {
