@@ -1,6 +1,7 @@
 from ACExpansion.api.views import (ListACRecordByCountry, 
                                    ListYears,
-                                   ListCountries)
+                                   ListCountries,
+                                   ListMapParameters)
 from django.urls import path
 
 
@@ -8,7 +9,7 @@ urlpatterns = [
 
     path('records/countries/', 
           ListCountries.as_view(),
-          name="poni"),
+          name="countries"),
           
     path('records/<str:country>/', 
           ListACRecordByCountry.as_view(), 
@@ -17,5 +18,9 @@ urlpatterns = [
     path('records/<str:country>/years/', 
           ListYears.as_view(), 
           name="years"),
+
+    path('map-parameters/', 
+          ListMapParameters.as_view(),
+          name="map"),
 
 ]
