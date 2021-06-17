@@ -26,7 +26,7 @@ class BaseGeoCalculations():
             lon_max, lon_min, lat_max, lat_min)
         lon_center = side_length/2 + lon_min
         lat_center = side_length/2 + lat_min
-        return [lon_center, lat_center]
+        return {"lon_center": lon_center, "lat_center": lat_center}
 
     @staticmethod
     def addBuffer(lon_max, lon_min, lat_max, lat_min):
@@ -58,7 +58,8 @@ class MapParameters(BaseGeoCalculations):
         self.data_country = self.filter_data_by_country()
 
     def filter_data_by_country(self):
-        data_country = MapParameters.data[MapParameters.data.country==self.country]
+        data_country = MapParameters.data[
+            MapParameters.data.country==self.country]
         return data_country
 
     def getVertices(self):
@@ -73,4 +74,4 @@ class MapParameters(BaseGeoCalculations):
         vertices = self.getVertices()
         buffer_coord = self.addBuffer(**vertices)
         map_center = self.getCenter(**buffer_coord)
-        return {'center': map_center, 'vertices': buffer_coord}
+        return {**map_center, **buffer_coord, "country": self.country}
