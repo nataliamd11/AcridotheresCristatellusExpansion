@@ -1,10 +1,12 @@
 <template>
+<div>
   <div class="container">
     <Dropdown></Dropdown>
     <PlayMap></PlayMap>
     <!-- <span>{{ selectedCountry }}</span> -->
   </div>
   <Map :latLonRecords="ACRecords"></Map>
+</div>
 </template>
 
 <script>
