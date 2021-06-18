@@ -1,10 +1,5 @@
 import axios from "axios";
-import { createMap, 
-  addTile, 
-  // addRecordsMarkers, 
-  createMarkerGroup,
-  // removeMarkers 
-} from "/utils/utilsMap.js";
+import { addTile, createMap, createMarkerGroup } from "/utils/utilsMap.js";
 
 
 const state = () => ({
@@ -15,8 +10,6 @@ const state = () => ({
   
 const getters = {
     getMapBoundsByCountry: (state, getters, rootState) => {
-        console.log('state.map_parameters: ', state.map_parameters);
-        console.log('rootState: ', rootState.ApiData.selected_country);
         let country = rootState.ApiData.selected_country;
         let mapParams = state.map_parameters.find(
             map_params => map_params.country === rootState.ApiData.selected_country);
@@ -44,12 +37,10 @@ const mutations = {
 const actions = {
 
     async getAPIMapParameters(context) {
-      console.log('getAPIMapParameters');
       // Gets data from django api and saves it in state.
       let endpoint = ["api", "map-parameters", ""].join("/");
       try {
         let map_parameters = await axios.get(endpoint);
-        console.log('en actions: ', map_parameters);
         context.commit("saveMapParameters", { 
             map_parameters: map_parameters.data });
       } catch(err) {

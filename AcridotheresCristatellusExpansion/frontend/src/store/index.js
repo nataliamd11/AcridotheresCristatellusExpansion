@@ -30,12 +30,10 @@ export default createStore({
   actions: {
 
     async getAPICountryList(context) {
-      console.log('entra: getcountries action');
       // Gets data from django api and saves it in state.
       let endpoint = ["api", "records", "countries", ""].join("/");
       try {
         let countries = await axios.get(endpoint);
-        console.log('countries data: ', countries.data);
         context.commit("saveCountries", { countries: countries.data });
       } catch(err) {
         if (err.response) {

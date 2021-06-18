@@ -3,7 +3,7 @@
   <div class="container">
     <Dropdown></Dropdown>
     <PlayMap></PlayMap>
-    <!-- <span>{{ selectedCountry }}</span> -->
+    <span>{{ selectedCountry }}</span>
   </div>
   <Map :latLonRecords="ACRecords"></Map>
 </div>
@@ -11,7 +11,6 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-// import { maxMinYears, sleep } from "/utils/utils.js";
 import Map from "@/components/Map";
 import Dropdown from "@/components/Dropdown";
 import PlayMap from "@/components/PlayMap";
@@ -25,13 +24,11 @@ export default {
   },
   watch: {
     selectedCountry() {
-      console.log('en watch home', this.selectedCountry);
       this.getAPIRecords();
     },
   },
   async mounted() {
     // starts by showing Argentinian records
-    // await this.getAPIMapParameters();
     await this.getAPIRecords();
   },
   computed: {
@@ -39,16 +36,10 @@ export default {
       ACRecords: 'getRecordsByYear',
       selectedCountry: 'getSelectedCountry',
     }),
-    // ACRecords() {
-    //   return this.getRecordsByYear
-    // }
   },
   methods: {
     ...mapActions('ApiData/', [
       "getAPIRecords",
-    ]),
-    ...mapActions('MapData/', [
-      "getAPIMapParameters",
     ]),
   },
 };

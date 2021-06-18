@@ -28,7 +28,6 @@ export default {
             "getAPICountryList",
         ]),
         async setCountry () {
-            console.log('in dropdown', this.selectedCountry);
             await this.$store.commit('ApiData/saveSelectedCountry', 
                                {'selected_country': this.selectedCountry})
         },
