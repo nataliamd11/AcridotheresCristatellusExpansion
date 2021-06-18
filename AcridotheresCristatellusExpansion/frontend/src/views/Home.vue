@@ -31,6 +31,7 @@ export default {
   },
   async mounted() {
     // starts by showing Argentinian records
+    // await this.getAPIMapParameters();
     await this.getAPIRecords();
   },
   computed: {
@@ -45,6 +46,9 @@ export default {
   methods: {
     ...mapActions('ApiData/', [
       "getAPIRecords",
+    ]),
+    ...mapActions('MapData/', [
+      "getAPIMapParameters",
     ]),
   },
 };
