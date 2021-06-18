@@ -31,3 +31,27 @@ class ACRecord(models.Model):
 
     def __str__(self):
         return f'{self.country_code} _ {self.year}'
+
+
+class MapParameters(models.Model):
+
+    id = models.UUIDField(primary_key=True,
+                          default=uuid.uuid4,
+                          editable=False)
+    country = models.CharField(max_length=150)
+    lon_center = models.FloatField(validators=[MinValueValidator(-180), 
+                                              MaxValueValidator(180)])
+    lat_center = models.FloatField(validators=[MinValueValidator(-90), 
+                                             MaxValueValidator(90)])
+    lon_max = models.FloatField(validators=[MinValueValidator(-180), 
+                                              MaxValueValidator(180)])
+    lon_min = models.FloatField(validators=[MinValueValidator(-180), 
+                                              MaxValueValidator(180)])
+    lat_max = models.FloatField(validators=[MinValueValidator(-180), 
+                                              MaxValueValidator(180)])
+    lat_min = models.FloatField(validators=[MinValueValidator(-180), 
+                                              MaxValueValidator(180)])
+    zoom = models.IntegerField(default=6)
+
+    def __str__(self):
+        return f'Map parameters: {self.country}'

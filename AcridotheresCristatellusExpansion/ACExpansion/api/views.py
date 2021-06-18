@@ -1,7 +1,7 @@
 import json
 
-from ACExpansion.api.serializers import ACRecordSerializer
-from ACExpansion.models import ACRecord
+from ACExpansion.api.serializers import ACRecordSerializer, MapSerializer
+from ACExpansion.models import ACRecord, MapParameters
 
 from django.http import HttpResponse
 from django.views.generic import View
@@ -18,6 +18,14 @@ class ListACRecordByCountry(APIView):
         return Response(serializer.data)
 
 
+class ListMapParameters(APIView):
+    
+    def get(self, request):
+        model_instance = MapParameters.objects.all()
+        serializer = MapSerializer(model_instance, many=True)
+        return Response(serializer.data)
+
+
 class ListYears(View):
 
     def get(self, request, country):
@@ -26,4 +34,19 @@ class ListYears(View):
                               .values_list('year', flat=True)
                               .distinct())
         return HttpResponse(json.dumps(list(AC_country)),
+                            content_type="application/json")
+
+
+class ListCountries(View):
+
+    def list_countries(self):
+        countries = (ACRecord.objects.all()
+                        .order_by('country')
+                        .values_list('country', flat=True)
+                        .distinct())
+        return list(countries)
+
+    def get(self, request):
+        countries = self.list_countries()
+        return HttpResponse(json.dumps(countries),
                             content_type="application/json")

@@ -1,43 +1,47 @@
 import { createStore } from "vuex";
 import axios from "axios";
+import ApiData from './modules/ApiData';
+import MapData from './modules/MapData';
+
 
 export default createStore({
-  state: {
-    records: [],
-    years: [],
+  
+  modules: {
+      ApiData,
+      MapData,
   },
+
+  state: {
+    countries: [],
+  },
+
   getters: {
-    getRecordsByYear: (state) => (year) => {
-      return state.records.filter((records_year) => records_year.year === year);
-    },
-    Countries: (state) => {
+    getCountries: (state) => {
       return state.countries;
     },
-    getYears: (state) => {
-      return state.years;
-    },
   },
+
   mutations: {
-    saveRecords(state, payload) {
-      state.records = payload.records;
-    },
-    saveYears(state, payload) {
-      state.years = payload.years;
+    saveCountries(state, payload) {
+      state.countries = payload.countries;
     },
   },
+
   actions: {
-    getAPIRecords(context, siteParams) {
-      let endpoint = ["api", "records", siteParams.country, ""].join("/");
-      axios
-        .all([axios.get(endpoint), axios.get(endpoint + "years/")])
-        .then(
-          axios.spread((records, years) => {
-            context.commit("saveRecords", { records: records.data }),
-              context.commit("saveYears", { years: years.data });
-          })
-        )
-        .catch((err) => console.log(err));
+
+    async getAPICountryList(context) {
+      // Gets data from django api and saves it in state.
+      let endpoint = ["api", "records", "countries", ""].join("/");
+      try {
+        let countries = await axios.get(endpoint);
+        context.commit("saveCountries", { countries: countries.data });
+      } catch(err) {
+        if (err.response) {
+          console.log('error: ', err.response.status);
+        }
+      }
     },
-  },
-  modules: {},
+
+  }
+
 });
