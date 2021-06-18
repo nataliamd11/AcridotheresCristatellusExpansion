@@ -8,7 +8,6 @@ const state = () => ({
     records: [],
     years: [],
     current_year: null,
-    countries: [],
     selected_country: '',
     play_map: true,
   })
@@ -22,9 +21,6 @@ const getters = {
                             'lon': recordsYear[i].longitude}
         }
         return latLonYears
-    },
-    getCountries: (state) => {
-      return state.countries;
     },
     getSelectedCountry: (state) => {
       return state.selected_country;
@@ -50,9 +46,6 @@ const getters = {
     saveCurrentYear(state, payload) {
       state.current_year = payload.current_year;
     },
-    saveCountries(state, payload) {
-      state.countries = payload.countries;
-    },
     saveSelectedCountry(state, payload) {
       state.selected_country = payload.selected_country;
     },
@@ -71,21 +64,6 @@ const getters = {
           [axios.get(endpoint), axios.get(endpoint + "years/")])
         context.commit("saveRecords", { records: records.data }),
         context.commit("saveYears", { years: years.data });
-      } catch(err) {
-        if (err.response) {
-          console.log('error: ', err.response.status);
-        }
-      }
-    },
-
-    async getAPICountryList(context) {
-      console.log('entra: getcountries action');
-      // Gets data from django api and saves it in state.
-      let endpoint = ["api", "records", "countries", ""].join("/");
-      try {
-        let countries = await axios.get(endpoint);
-        console.log('countries data: ', countries.data);
-        context.commit("saveCountries", { countries: countries.data });
       } catch(err) {
         if (err.response) {
           console.log('error: ', err.response.status);
