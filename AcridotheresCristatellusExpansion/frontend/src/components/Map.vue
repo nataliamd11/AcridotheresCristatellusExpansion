@@ -61,7 +61,57 @@ export default {
 
 <style scoped>
 #mapContainer {
-  width: 800px;
-  height: 500px;
+  width: 200px;
+  height: 200px;
 }
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 400px) { 
+      #mapContainer {
+      width: 300px;
+      height: 200px;
+    }
+ }
+
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 576px) { 
+      #mapContainer {
+      width: 300px;
+      height: 300px;
+    }
+ }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px){
+  #mapContainer {
+      width: 400px;
+      height: 300px;
+    }
+ }
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  #mapContainer {
+      width: 500px;
+      height: 400px;
+    }
+  }
+
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+   #mapContainer {
+      width: 600px;
+      height: 500px;
+    }
+  }
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { 
+  #mapContainer {
+      width: 700px;
+      height: 500px;
+    }
+  }
 </style>

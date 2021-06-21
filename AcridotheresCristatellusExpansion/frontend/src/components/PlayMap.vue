@@ -1,7 +1,7 @@
 <template>
     <div class="mt-3">
         <button v-if="getPlayMap" @click="playAnimatedMap">Play</button>
-        <button v-else @click="stopAnimatedMap">Stop</button>
+        <button v-else @click="stopAnimatedMap">Pause</button>
     </div>
 </template>
 
