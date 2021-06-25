@@ -23,7 +23,7 @@ export default {
 <style scoped>
     .header-margin {
         margin: 0px;
-        margin-bottom: 10px;
+        margin-bottom: 0px;
         padding: 2rem;
     }
 </style>
