@@ -1,22 +1,18 @@
 <template>
 <div>
-  <div class="container-fluid">
-    <div class="row title">
-        <p>Expansion of Crested Myna in America</p>
-    </div>
-    <div class="row">
-      <div class="col-sm-3 m-2">
-        <Dropdown></Dropdown>
-        <PlayMap></PlayMap>
+  <div>
+    <div class="row" style="margin: 1rem;">
+      <div class="col-sm-3 mt-3">
+        <CountrySelector></CountrySelector>
       </div>
-      <div class="col-sm-2 m-2">
+      <div class="col-sm-2 mt-3">
         <Calendar v-if="showedYear" :showedYear="showedYear"></Calendar>
         <Calendar v-else></Calendar>
       </div>
-      <div class="col-sm-5 m-2">
+      <div class="col-sm-5 mt-3">
         <Map :latLonRecords="ACRecords"></Map>
       </div>
-      <div class="col-sm-1 m-2">
+      <div class="col-sm-1 mt-3">
       </div>
   </div>
   
@@ -27,17 +23,15 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import Map from "@/components/Map";
-import Dropdown from "@/components/Dropdown";
-import PlayMap from "@/components/PlayMap";
 import Calendar from "@/components/Calendar";
+import CountrySelector from "@/components/CountrySelector";
 
 export default {
   name: "Home",
   components: {
     Map,
-    Dropdown,
-    PlayMap,
     Calendar,
+    CountrySelector,
   },
   watch: {
     selectedCountry() {
@@ -62,3 +56,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .padding-container {
+    padding-right: 0rem;
+    padding-left: 0rem;
+  }
+</style>
