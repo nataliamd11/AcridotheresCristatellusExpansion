@@ -1,9 +1,19 @@
 <template>
-  <div id="nav">
-    <!-- <router-link to="/">Home</router-link> | -->
+  <div id="app">
+    <Header></Header>
+    <router-view />
   </div>
-  <router-view />
 </template>
+
+<script>
+import Header from "@/components/Header";
+
+export default {
+  components: {
+    Header,
+  }
+}
+</script>
 
 <style>
 #app {

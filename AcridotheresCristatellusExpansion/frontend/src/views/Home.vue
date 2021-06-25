@@ -1,7 +1,6 @@
 <template>
 <div>
-  <div class="padding-container container-fluid margin-container">
-    <Header></Header>
+  <div>
     <div class="row" style="margin: 1rem;">
       <div class="col-sm-3 mt-3">
         <CountrySelector></CountrySelector>
@@ -25,7 +24,6 @@
 import { mapActions, mapGetters } from "vuex";
 import Map from "@/components/Map";
 import Calendar from "@/components/Calendar";
-import Header from "@/components/Header";
 import CountrySelector from "@/components/CountrySelector";
 
 export default {
@@ -33,7 +31,6 @@ export default {
   components: {
     Map,
     Calendar,
-    Header,
     CountrySelector,
   },
   watch: {
