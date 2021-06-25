@@ -1,64 +1,75 @@
 <template>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+  <div class="container-fluid m-2 ms-lg-5">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-menu" aria-controls="collapse-menu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div class="collapse navbar-collapse" id="collapse-menu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <li id="home-route" class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/">Expansion Map</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+        <li id="species-route" class="nav-item">
+          <router-link class="nav-link" aria-current="page" to="/species/">About the species</router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <li id="data-route" class="nav-item">
+          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">About the data</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div style="margin-left: 4rem;">
-         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-            <ul class="navbar-nav collapse navbar-collapse mr-auto" id="navbarTogglerDemo01">
-                <li class="nav-item active">
-                    <a class="nav-link color-light" href="#">Item 1 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled color-light" href="#" tabindex="-1" aria-disabled="true">Item 2</a>
-                </li>
-                <li class="nav-item">
-                    <router-link class="nav-link disabled color-light" to="/">Home</router-link> 
-                </li>
-            </ul>
-        </div>
-    </nav> -->
 </template>
 
 <script>
 export default {
     name: 'Navbar',
+    computed: {
+      routeName() {
+        console.log(this.$route.name);
+        return this.$route.name
+      },
+  },
+  methods: {
+    removeActiveClass() {
+      let routesEl = document.getElementsByTagName("li");
+      routesEl.forEach(element => {
+        console.log(element);
+        element.classList.remove("active");
+      });
+    },
+  },
+  watch: {
+    routeName() {
+      this.removeActiveClass();
+      let routeElement;
+      document.class
+      if (this.routeName === "Home") {
+        routeElement = document.getElementById("home-route");
+        routeElement.classList.add("active");
+      } else if (this.routeName === "Species") {
+        routeElement = document.getElementById("species-route");
+        routeElement.classList.add("active");
+      } else {
+        routeElement = document.getElementById("data-route");
+        routeElement.classList.add("active");
+      }
+    }
+    }
 }
 </script>
 
 <style scoped>
-    .navbar-style {
-        background-color: rgb(95, 90, 90);
+    .bg-light {
+        color: #2a2420;
+        background-color: #faebd7 !important;
     }
-    .color-light {
-        color: antiquewhite;
-        font-weight: 400;
-        margin-left: 2rem;
+    .nav-item.active {
+        text-decoration: underline;
     }
 
-    .nav-link:focus, .nav-link:hover{
-        color: white;
-    }
-    .nav-item:active {
-        color: white;
+   .nav-item:hover {
+	    color: rgba(0,0,0,.7);
+        font-weight: 600;
     }
 </style>
