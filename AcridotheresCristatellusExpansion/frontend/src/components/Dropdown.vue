@@ -1,8 +1,9 @@
 <template>
-    <div class="container">
-        <select @click="changeMap" v-model="selectedCountry">
+    <div class="country-dropdown">
+        <select class="country-select" @click="changeMap" v-model="selectedCountry">
             <option v-for="(country, index) in countries" :key="index">
-            {{ country }} </option>
+                {{ country }}
+            </option>
         </select>
     </div>
 </template>
@@ -49,6 +50,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+    .country-dropdown {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .country-select {
+        color: rgb(245, 239, 230);
+        background-color: rgb(89, 92, 102);
+        height: 30px;
+        font-family: 'Signika', sans-serif;
+        padding-left: 5px;
+        border-radius: 5%;
+        border-style: solid;
+        border-color: rgb(245, 239, 230);
+    }
 
 </style>

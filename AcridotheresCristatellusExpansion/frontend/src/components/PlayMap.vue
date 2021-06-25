@@ -1,7 +1,7 @@
 <template>
     <div class="mt-3">
-        <button v-if="getPlayMap" @click="playAnimatedMap">Play</button>
-        <button v-else @click="stopAnimatedMap">Pause</button>
+        <button type="button" class="btn btn-danger dark-background" v-if="getPlayMap" @click="playAnimatedMap">Play</button>
+        <button type="button" class="btn btn-danger dark-background" v-else @click="stopAnimatedMap">Pause</button>
     </div>
 </template>
 
@@ -28,5 +28,17 @@ export default {
 </script>
 
 <style scoped>
+
+    button {
+        height: 35px;
+        width: 80px;
+        border-radius: 20%;
+        margin-bottom: 20px;
+        border-color: None;
+        box-shadow: 0px 0px;
+        font-family: 'Signika', sans-serif;
+        /* border-style: solid;
+        border-color: #af2929; */
+    }
 
 </style>
